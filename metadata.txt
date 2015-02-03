@@ -1,0 +1,14 @@
+[general]
+name=GeoJSONPlugin
+qgisMinimumVersion=2.0
+description=GeoJSONPlugin
+	Online export the raster en GeoJSON
+version=0.1
+author=Champs-Libres Cooperative
+email=info@champs-libres.coop
+;tags=GeoJSON, FTP
+;homepage=TODO
+;repository=TODO
+;tracker=TODO
+icon= img/icon.png
+;category=

@@ -1,0 +1,3 @@
+SFTP = 'SFTP'
+FTP = 'FTP'
+FTPS = 'FTPS'
