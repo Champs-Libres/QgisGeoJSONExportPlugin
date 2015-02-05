@@ -97,7 +97,3 @@ For example if the attibutes table contains three columns `col1`, `col2`, `col3`
     "col1": "Test alias 1",
 }
 ```
-
-
-
-TODO
