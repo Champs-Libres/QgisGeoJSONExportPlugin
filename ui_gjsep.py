@@ -255,7 +255,7 @@ class Ui_Dialog(object):
         self.fTPSLabel.setText(_translate("Dialog", "FTP SSL/TLS", None))
         self.exportButton.setText(_translate("Dialog", "Export", None))
         self.cancelButton.setText(_translate("Dialog", "Cancel", None))
-        self.saveSettingsButton.setText(_translate("Dialog", "Save Settings", None))
+        self.saveSettingsButton.setText(_translate("Dialog", "Save parameters", None))
         self.parametersLabel.setText(_translate("Dialog", "Parameters", None))
         self.protocolLabel.setText(_translate("Dialog", "Protocol", None))
         self.serverUrlLabel.setText(_translate("Dialog", "Server Url", None))
