@@ -157,13 +157,19 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         """Upload the files contained in the tmp folder to a remote host. The
         upload is done via sftp protocol."""
         import paramiko
-        port = int(self.get_port() or 22)
 
         s = paramiko.SSHClient()
         s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        s.connect(
-            self.get_server_url(), port, username=self.get_username(),
-            password=self.get_password(), timeout=4)
+
+        port = self.get_port()
+        if port:
+            s.connect(
+                self.get_server_url(), port=port, username=self.get_username(),
+                password=self.get_password(), timeout=4)
+        else:
+            s.connect(
+                self.get_server_url(), username=self.get_username(),
+                password=self.get_password(), timeout=4)
 
         sftp = s.open_sftp()
 
@@ -203,13 +209,17 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         proto -- the protocol (can be protocol.FTP or protocol.FTPS)
         """
         import ftplib
-        port = int(self.get_port() or 21)
-        from ftplib import FTP_TLS, FTP
+
         if proto == protocol.FTPS:
             s = ftplib.FTP_TLS()
         else:
             s = ftplib.FTP()
-        s.connect(host=self.get_server_url(), port=port)
+
+        port = self.get_port()
+        if port:
+            s.connect(host=self.get_server_url(), port=int(port))
+        else:
+            s.connect(host=self.get_server_url(), port=int(port))
         s.login(user=self.get_username(), passwd=self.get_password())
         if proto == protocol.FTPS:
             s.prot_p()
