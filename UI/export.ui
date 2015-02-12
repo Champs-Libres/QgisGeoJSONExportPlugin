@@ -6,76 +6,193 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>582</width>
-    <height>506</height>
+    <width>494</width>
+    <height>582</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="formLayoutWidget">
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>30</y>
-     <width>471</width>
-     <height>66</height>
-    </rect>
-   </property>
-   <layout class="QFormLayout" name="formLayout_4">
-    <property name="fieldGrowthPolicy">
-     <enum>QFormLayout::FieldsStayAtSizeHint</enum>
-    </property>
-    <item row="0" column="0">
-     <widget class="QLabel" name="fTPLabel">
-      <property name="text">
-       <string>FTP</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QRadioButton" name="fTPRadioButton"/>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="sFTPLabel">
-      <property name="text">
-       <string>SFTP</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QRadioButton" name="sFTPRadioButton"/>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="postLabel">
-      <property name="text">
-       <string>Post</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QRadioButton" name="postRadioButton"/>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>440</y>
-     <width>110</width>
-     <height>32</height>
+     <x>30</x>
+     <y>20</y>
+     <width>131</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Export</string>
+    <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>240</x>
-     <y>440</y>
+     <x>20</x>
+     <y>10</y>
+     <width>451</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Protocol :</string>
+   </property>
+   <widget class="QRadioButton" name="fTPRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>30</y>
+      <width>161</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>FTP</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="sFTPRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>50</y>
+      <width>151</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SSH FTP</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="fTPSRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>70</y>
+      <width>181</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>FTP SSL/TLS</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>110</y>
+     <width>451</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Parameters :</string>
+   </property>
+   <widget class="QWidget" name="formLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>431</width>
+      <height>235</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout">
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::ExpandingFieldsGrow</enum>
+     </property>
+     <property name="rowWrapPolicy">
+      <enum>QFormLayout::DontWrapRows</enum>
+     </property>
+     <property name="formAlignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="serverUrlLabel">
+       <property name="text">
+        <string>Server Url :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="serverUrlLineEdit"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="portLabel">
+       <property name="text">
+        <string>Port :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="portLineEdit"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="usernameLabel">
+       <property name="text">
+        <string>Username :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="usernameLineEdit"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="passwordLabel">
+       <property name="text">
+        <string>Password :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="passwordLineEdit"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="pathLabel">
+       <property name="text">
+        <string>Path :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="pathLineEdit"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>300</y>
+     <width>451</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Vectorial layers to export :</string>
+   </property>
+   <widget class="QListWidget" name="vLayersListWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>431</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::MultiSelection</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="cancelButton">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>540</y>
      <width>110</width>
      <height>32</height>
     </rect>
@@ -84,178 +201,56 @@
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QPushButton" name="exportButton">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>110</y>
-     <width>91</width>
-     <height>16</height>
+     <x>370</x>
+     <y>540</y>
+     <width>110</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="text">
-    <string>Parameters</string>
+    <string>Export</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QPushButton" name="saveSettingsButton">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>10</y>
-     <width>81</width>
-     <height>16</height>
+     <x>230</x>
+     <y>540</y>
+     <width>141</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="text">
-    <string>Connexion</string>
+    <string>Save parameters</string>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QGroupBox" name="groupBox_4">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>130</y>
-     <width>471</width>
-     <height>169</height>
-    </rect>
-   </property>
-   <layout class="QFormLayout" name="formLayout">
-    <property name="fieldGrowthPolicy">
-     <enum>QFormLayout::FieldsStayAtSizeHint</enum>
-    </property>
-    <item row="1" column="0">
-     <widget class="QLabel" name="serverUrlLabel">
-      <property name="text">
-       <string>Server Url</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="serverUrlLineEdit">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>350</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="frame">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="loginLabel">
-      <property name="text">
-       <string>Login</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLineEdit" name="loginLineEdit">
-      <property name="minimumSize">
-       <size>
-        <width>350</width>
-        <height>0</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="passwordLabel">
-      <property name="text">
-       <string>Password</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QLineEdit" name="passwordLineEdit">
-      <property name="minimumSize">
-       <size>
-        <width>350</width>
-        <height>0</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="exportFileNameLabel">
-      <property name="text">
-       <string>Export File Name</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="1">
-     <widget class="QLineEdit" name="exportFileNameLineEdit">
-      <property name="minimumSize">
-       <size>
-        <width>350</width>
-        <height>0</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QLabel" name="pathLabel">
-      <property name="text">
-       <string>Path</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="1">
-     <widget class="QLineEdit" name="pathLineEdit">
-      <property name="minimumSize">
-       <size>
-        <width>350</width>
-        <height>0</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="formLayoutWidget_2">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>330</y>
-     <width>471</width>
+     <x>20</x>
+     <y>430</y>
+     <width>451</width>
      <height>101</height>
     </rect>
    </property>
-   <layout class="QFormLayout" name="formLayout_2">
-    <property name="fieldGrowthPolicy">
-     <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+   <property name="title">
+    <string>Message :</string>
+   </property>
+   <widget class="QTextBrowser" name="message">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>431</width>
+      <height>61</height>
+     </rect>
     </property>
-   </layout>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>300</y>
-     <width>151</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Layers to export</string>
-   </property>
+   </widget>
   </widget>
  </widget>
- <tabstops>
-  <tabstop>fTPRadioButton</tabstop>
-  <tabstop>postRadioButton</tabstop>
-  <tabstop>serverUrlLineEdit</tabstop>
-  <tabstop>loginLineEdit</tabstop>
-  <tabstop>passwordLineEdit</tabstop>
-  <tabstop>exportFileNameLineEdit</tabstop>
-  <tabstop>pathLineEdit</tabstop>
-  <tabstop>pushButton_2</tabstop>
-  <tabstop>pushButton</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

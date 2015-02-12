@@ -22,7 +22,9 @@
 """
 
 from PyQt4.QtCore import pyqtSlot
-from PyQt4.QtGui import QDialog, QLineEdit
+from PyQt4.QtGui import QDialog, QLabel, QCheckBox, QListWidgetItem, qApp,\
+    QTextCursor
+
 
 from ui_gjsep import Ui_Dialog
 from processing.ui.ui_DlgConfig import Ui_DlgConfig
@@ -39,6 +41,7 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
     def __init__(self, project_filename, vector_layers):
         """Initilization of the dialog"""
         QDialog.__init__(self)
+        self.layer_to_export_list_item = {}
         self.stored_data_file = os.path.dirname(os.path.realpath(__file__)) +\
             '/data'
         self.setupUi(self)
@@ -52,7 +55,7 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         self.cancelButton.clicked.connect(self.close)
         self.saveSettingsButton.clicked.connect(self.store_data)
         self.plugin_path = os.path.dirname(os.path.realpath(__file__))
-        self.tmp_folder_path = os.path.join(self.plugin_path, 'tmp/')
+        self.tmp_folder_path = os.path.join(self.plugin_path, 'tmp/')        
 
     def get_selected_layers_for_export(self):
         """Return the list of all the layers selected for the export"""
@@ -130,7 +133,7 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
             for f in os.listdir(self.tmp_folder_path):
                 f_path = os.path.join(self.tmp_folder_path, f)
                 os.unlink(f_path)
-            self.display_success_message('Temporary dir has been cleared')
+            self.display_message('Temporary dir has been cleared')
             return True
         except Exception as e:
             self.display_error_message('Temporary dir has been not cleared')
@@ -143,7 +146,7 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         for layer in selected_layers:
             layer_name = layer.name()
             self.display_message(
-                'Generating GeoJSON files for the layer' + layer_name)
+                'Generating GeoJSON files for the layer ' + layer_name)
             self.create_json_alias_file(
                 layer,
                 os.path.join(
@@ -156,50 +159,51 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
     def sftp_upload(self):
         """Upload the files contained in the tmp folder to a remote host. The
         upload is done via sftp protocol."""
-        import paramiko
+        try:
+            import paramiko
 
-        s = paramiko.SSHClient()
-        s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            s = paramiko.SSHClient()
+            s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-        port = self.get_port()
-        if port:
-            s.connect(
-                self.get_server_url(), port=port, username=self.get_username(),
-                password=self.get_password(), timeout=4)
-        else:
-            s.connect(
-                self.get_server_url(), username=self.get_username(),
-                password=self.get_password(), timeout=4)
+            port = self.get_port()
+            if port:
+                s.connect(
+                    self.get_server_url(), port=int(port),
+                    username=self.get_username(),
+                    password=self.get_password(), timeout=4)
+            else:
+                s.connect(
+                    self.get_server_url(), username=self.get_username(),
+                    password=self.get_password(), timeout=4)
 
-        sftp = s.open_sftp()
+            sftp = s.open_sftp()
 
-        success_message = 'The files '
+            def callback(file_name):
+                d = {'tansfer_percent': -1}
 
-        def callback(file_name):
-            d = {'tansfer_percent': -1}
+                def ret(transferred, toBeTransferred):
+                    new_tansfer_percent = int(
+                        float(transferred) / toBeTransferred * 100)
+                    if new_tansfer_percent != d['tansfer_percent']:
+                        self.rm_last_char_message(5)
+                        self.display_message(
+                            ' ' + str(new_tansfer_percent).zfill(2) + '%')
+                        d['tansfer_percent'] = new_tansfer_percent
+                return ret
 
-            def ret(transferred, toBeTransferred):
-                new_tansfer_percent = int(
-                    float(transferred) / toBeTransferred * 100)
-                if new_tansfer_percent != d['tansfer_percent']:
-                    self.display_message(
-                        'sending ' + file_name + ' : ' +
-                        str(new_tansfer_percent) + '%')
-                    d['tansfer_percent'] = new_tansfer_percent
-            return ret
-
-        for file_name in os.listdir(self.tmp_folder_path):
-            success_message += file_name
-            self.display_message('Sending ' + file_name)
-            absolute_file_name = os.path.join(
-                self.tmp_folder_path, file_name)
-            sftp.put(
-                absolute_file_name,
-                os.path.join(self.get_path(), file_name),
-                callback=callback(file_name))
-        s.close()
-        success_message += 'were successfully uploaded !'
-        self.display_success_message(success_message)
+            for file_name in os.listdir(self.tmp_folder_path):
+                self.display_message('Sending ' + file_name + ' :')
+                self.display_message(' 00%')
+                absolute_file_name = os.path.join(
+                    self.tmp_folder_path, file_name)
+                sftp.put(
+                    absolute_file_name,
+                    os.path.join(self.get_path(), file_name),
+                    callback=callback(file_name))
+            s.close()
+        except ImportError:
+            self.display_error_message('For the \'SSH FTP\' export paramiko\
+                must be installed. Please install it.')
 
     def ftp_ftps_upload(self, proto):
         """Upload the files contained in the tmp folder to a remote host. The
@@ -219,11 +223,10 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         if port:
             s.connect(host=self.get_server_url(), port=int(port))
         else:
-            s.connect(host=self.get_server_url(), port=int(port))
+            s.connect(host=self.get_server_url())
         s.login(user=self.get_username(), passwd=self.get_password())
         if proto == protocol.FTPS:
             s.prot_p()
-        success_message = 'The files '
 
         def callback(file_name, file_size, display_message):
             d = {'send_data_total': 0, 'send_data_percent': -1}
@@ -233,14 +236,15 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
                 new_send_data_percent = int(
                     float(d['send_data_total']) / file_size * 100)
                 if(new_send_data_percent > d['send_data_percent']):
-                    display_message('sending ' + file_name + ' : ' + str(
-                        new_send_data_percent) + '%')
+                    self.rm_last_char_message(5)
+                    display_message(
+                        ' ' + new_send_data_percent.zfill(2) + '%')
                     d['send_data_percent'] = new_send_data_percent
             return ret
 
         for file_name in os.listdir(self.tmp_folder_path):
-            success_message += file_name
-            self.display_message('Sending ' + file_name)
+            self.display_message('Sending ' + file_name + ' :')
+            self.display_message(' 00%')
             absolute_file_name = os.path.join(
                 self.tmp_folder_path, file_name)
             f = open(absolute_file_name)
@@ -254,13 +258,10 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
                     self.display_message))
             f.close()
         s.close()
-        success_message += ' were successfully uploaded !'
-        self.display_success_message(success_message)
 
     def export(self):
         """Send the data to a remote place"""
-        exported_file = ''
-        self.display_message('')
+        self.clear_message()
         proto = self.get_protocol()
         self.json_file_generation()
 
@@ -272,6 +273,89 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
             else:
                 self.display_error_message('Unknown protocol')
             if self.clear_tmp_folder():
-                self.display_message('The export was successful !')
+                self.display_success_message('The export was successful !')
         except Exception as e:
             self.display_error_message(str(e))
+
+    def add_layer_to_export(self, layer):
+        """ To DO"""
+        layer_id = layer.id()
+        layer_name = layer.name()
+
+        item = QListWidgetItem()
+        item.setText(layer_name)
+        self.vLayersListWidget.addItem(item)
+        self.layer_to_export_list_item[layer_id] = item
+
+    def is_layer_selected(self, layer):
+        """ TO DO"""
+        layer_id = layer.id()
+        if layer_id in self.layer_to_export_list_item:
+            return self.layer_to_export_list_item[layer_id].isSelected()
+        else:
+            self.display_error_message('No layer with id ' + layer_id)
+            return False
+
+    def select_layer(self, layer):
+        """ TO DO"""
+        layer_id = layer.id()
+        if layer_id in self.layer_to_export_list_item:
+            self.layer_to_export_list_item[layer.id()].setSelected(True)
+
+    def display_error_message(self, msg):
+        """TOSO"""
+        self.display_bold_message("<font color='red'>" + msg + "</font>")
+
+    def display_success_message(self, msg):
+        """TOSO"""
+        self.display_bold_message("<font color='green'>" + msg + "</font>")
+
+    def display_bold_message(self, msg):
+        """TOSO"""
+        self.display_message("<b>" + msg + "</b>")
+
+    def display_message(self, msg):
+        """TOSO"""
+        self.message.append(msg)
+        qApp.processEvents()
+
+    def clear_message(self):
+        """TOSO"""
+        self.message.setText('')
+        qApp.processEvents()
+
+    def rm_last_char_message(self, number_of_chars_to_rm):
+        """TOSO"""
+        cursor = self.message.textCursor()
+        cursor.movePosition(QTextCursor.End)
+        for i in range(0, number_of_chars_to_rm):
+            cursor.deletePreviousChar()
+
+    def get_protocol(self):
+        """TOSO"""
+        if self.fTPSRadioButton.isChecked():
+            return protocol.FTPS
+        elif self.fTPRadioButton.isChecked():
+            return protocol.FTP
+        else:
+            return protocol.SFTP
+
+    def get_server_url(self):
+        """TOSO"""
+        return self.serverUrlLineEdit.text()
+
+    def get_username(self):
+        """TOSO"""
+        return self.usernameLineEdit.text()
+
+    def get_path(self):
+        """TOSO"""
+        return self.pathLineEdit.text()
+
+    def get_password(self):
+        """TOSO"""
+        return self.passwordLineEdit.text()
+
+    def get_port(self):
+        """TOSO"""s
+        return self.portLineEdit.text()
