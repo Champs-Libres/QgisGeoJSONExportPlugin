@@ -55,7 +55,10 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         self.cancelButton.clicked.connect(self.close)
         self.saveSettingsButton.clicked.connect(self.store_data)
         self.plugin_path = os.path.dirname(os.path.realpath(__file__))
-        self.tmp_folder_path = os.path.join(self.plugin_path, 'tmp/')        
+        self.tmp_folder_path = os.path.join(self.plugin_path, 'tmp/')
+
+        if not os.path.exists(self.tmp_folder_path):
+            os.makedirs(self.tmp_folder_path)
 
     def get_selected_layers_for_export(self):
         """Return the list of all the layers selected for the export"""
@@ -357,5 +360,5 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         return self.passwordLineEdit.text()
 
     def get_port(self):
-        """TOSO"""s
+        """TOSO"""
         return self.portLineEdit.text()
