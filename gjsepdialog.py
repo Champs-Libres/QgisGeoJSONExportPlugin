@@ -277,7 +277,8 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
             else:
                 self.display_error_message('Unknown protocol')
             if self.clear_tmp_folder():
-                self.display_success_message('The export was successful !')
+                self.display_success_message(
+                    'YIPPEE! The export was successful.')
         except Exception as e:
             self.display_error_message(str(e))
 
