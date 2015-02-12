@@ -207,6 +207,7 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         except ImportError:
             self.display_error_message('For the \'SSH FTP\' export paramiko\
                 must be installed. Please install it.')
+            raise ImportError
 
     def ftp_ftps_upload(self, proto):
         """Upload the files contained in the tmp folder to a remote host. The
