@@ -20,11 +20,9 @@
     You should have received a copy of the GNU General Public License along
     with QGISGeoJSONExportPlugin.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from PyQt4.QtCore import pyqtSlot
 from PyQt4.QtGui import QDialog, QLabel, QCheckBox, QListWidgetItem, qApp,\
     QTextCursor
-
 
 from ui_gjsep import Ui_Dialog
 from processing.ui.ui_DlgConfig import Ui_DlgConfig
@@ -48,7 +46,7 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         self.project_filename = project_filename
         self.vector_layers = vector_layers
         for layer in vector_layers:
-            self.add_layer_to_export(layer)
+            self.add_layer_in_selection_list(layer)
 
         self.load_data()
         self.exportButton.clicked.connect(self.export)
@@ -64,7 +62,7 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         """Return the list of all the layers selected for the export"""
         ret = []
         for layer in self.vector_layers:
-            if self.is_layer_selected(layer):
+            if self.is_layer_selected_for_export(layer):
                 ret.append(layer)
         return ret
 
@@ -104,7 +102,7 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         data_to_store['selected_layers'] = []
 
         for layer in self.vector_layers:
-            if self.is_layer_selected(layer):
+            if self.is_layer_selected_for_export(layer):
                 data_to_store['selected_layers'].append(layer.id())
 
         try:
@@ -282,8 +280,13 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         except Exception as e:
             self.display_error_message(str(e))
 
-    def add_layer_to_export(self, layer):
-        """ To DO"""
+    def add_layer_in_selection_list(self, layer):
+        """Add a vectorial layer in the list used for selecting which layer
+        to export.
+
+        Keyword arguments:
+        layer -- the layer to add
+        """
         layer_id = layer.id()
         layer_name = layer.name()
 
@@ -292,8 +295,13 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         self.vLayersListWidget.addItem(item)
         self.layer_to_export_list_item[layer_id] = item
 
-    def is_layer_selected(self, layer):
-        """ TO DO"""
+    def is_layer_selected_for_export(self, layer):
+        """Return true if the given layer has been selected by the user in the
+        selection list.
+
+        Keyword arguments:
+        layer -- the layer
+        """
         layer_id = layer.id()
         if layer_id in self.layer_to_export_list_item:
             return self.layer_to_export_list_item[layer_id].isSelected()
@@ -302,42 +310,66 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
             return False
 
     def select_layer(self, layer):
-        """ TO DO"""
+        """Set a layer as selected in the selection list (UI) for export.
+
+        Keyword arguments:
+        layer -- the layer
+        """
         layer_id = layer.id()
         if layer_id in self.layer_to_export_list_item:
             self.layer_to_export_list_item[layer.id()].setSelected(True)
 
     def display_error_message(self, msg):
-        """TOSO"""
+        """Display an error message in the message section of the dialog.
+
+        Keyword arguments:
+        msg -- the message
+        """
         self.display_bold_message("<font color='red'>" + msg + "</font>")
 
     def display_success_message(self, msg):
-        """TOSO"""
+        """Display a success message in the message section of the dialog.
+
+        Keyword arguments:
+        msg -- the message
+        """
         self.display_bold_message("<font color='green'>" + msg + "</font>")
 
     def display_bold_message(self, msg):
-        """TOSO"""
+        """Display a bold message in the message section of the dialog.
+
+        Keyword arguments:
+        msg -- the message
+        """
         self.display_message("<b>" + msg + "</b>")
 
     def display_message(self, msg):
-        """TOSO"""
+        """Display a message in the message section of the dialog.
+
+        Keyword arguments:
+        msg -- the message
+        """
         self.message.append(msg)
         qApp.processEvents()
 
     def clear_message(self):
-        """TOSO"""
+        """Clear the message section of the dialog."""
         self.message.setText('')
         qApp.processEvents()
 
     def rm_last_char_message(self, number_of_chars_to_rm):
-        """TOSO"""
+        """Remove a number of char (last ones) from the message section of the dialog.
+
+        Keyword arguments:
+        number_of_chars_to_rm -- the number of char to remove
+        """
         cursor = self.message.textCursor()
         cursor.movePosition(QTextCursor.End)
         for i in range(0, number_of_chars_to_rm):
             cursor.deletePreviousChar()
 
     def get_protocol(self):
-        """TOSO"""
+        """Get the protocol entered by the user in the dialog form."""
         if self.fTPSRadioButton.isChecked():
             return protocol.FTPS
         elif self.fTPRadioButton.isChecked():
@@ -346,21 +378,21 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
             return protocol.SFTP
 
     def get_server_url(self):
-        """TOSO"""
+        """Get the server url entered by the user in the dialog form."""
         return self.serverUrlLineEdit.text()
 
     def get_username(self):
-        """TOSO"""
+        """Get the username entered by the user in the dialog form."""
         return self.usernameLineEdit.text()
 
     def get_path(self):
-        """TOSO"""
+        """Get the path entered by the user in the dialog form."""
         return self.pathLineEdit.text()
 
     def get_password(self):
-        """TOSO"""
+        """Get the password entered by the user in the dialog form."""
         return self.passwordLineEdit.text()
 
     def get_port(self):
-        """TOSO"""
+        """Get the port entered by the user in the dialog form."""
         return self.portLineEdit.text()
