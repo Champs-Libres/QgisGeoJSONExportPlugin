@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'UI/export.ui'
 #
-# Created: Thu Feb 12 09:35:08 2015
+# Created: Fri Feb 13 11:26:29 2015
 #      by: PyQt4 UI code generator 4.11.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(494, 582)
+        Dialog.resize(492, 631)
         self.label = QtGui.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(30, 20, 131, 20))
         self.label.setText(_fromUtf8(""))
@@ -44,10 +44,10 @@ class Ui_Dialog(object):
         self.fTPSRadioButton.setGeometry(QtCore.QRect(100, 70, 181, 18))
         self.fTPSRadioButton.setObjectName(_fromUtf8("fTPSRadioButton"))
         self.groupBox_2 = QtGui.QGroupBox(Dialog)
-        self.groupBox_2.setGeometry(QtCore.QRect(20, 110, 451, 191))
+        self.groupBox_2.setGeometry(QtCore.QRect(20, 110, 451, 221))
         self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
         self.formLayoutWidget = QtGui.QWidget(self.groupBox_2)
-        self.formLayoutWidget.setGeometry(QtCore.QRect(10, 30, 431, 235))
+        self.formLayoutWidget.setGeometry(QtCore.QRect(10, 30, 431, 181))
         self.formLayoutWidget.setObjectName(_fromUtf8("formLayoutWidget"))
         self.formLayout = QtGui.QFormLayout(self.formLayoutWidget)
         self.formLayout.setFieldGrowthPolicy(QtGui.QFormLayout.ExpandingFieldsGrow)
@@ -86,23 +86,23 @@ class Ui_Dialog(object):
         self.pathLineEdit.setObjectName(_fromUtf8("pathLineEdit"))
         self.formLayout.setWidget(4, QtGui.QFormLayout.FieldRole, self.pathLineEdit)
         self.groupBox_3 = QtGui.QGroupBox(Dialog)
-        self.groupBox_3.setGeometry(QtCore.QRect(20, 300, 451, 131))
+        self.groupBox_3.setGeometry(QtCore.QRect(20, 340, 451, 131))
         self.groupBox_3.setObjectName(_fromUtf8("groupBox_3"))
         self.vLayersListWidget = QtGui.QListWidget(self.groupBox_3)
         self.vLayersListWidget.setGeometry(QtCore.QRect(10, 30, 431, 91))
         self.vLayersListWidget.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
         self.vLayersListWidget.setObjectName(_fromUtf8("vLayersListWidget"))
         self.cancelButton = QtGui.QPushButton(Dialog)
-        self.cancelButton.setGeometry(QtCore.QRect(20, 540, 110, 32))
+        self.cancelButton.setGeometry(QtCore.QRect(20, 590, 110, 32))
         self.cancelButton.setObjectName(_fromUtf8("cancelButton"))
         self.exportButton = QtGui.QPushButton(Dialog)
-        self.exportButton.setGeometry(QtCore.QRect(370, 540, 110, 32))
+        self.exportButton.setGeometry(QtCore.QRect(370, 590, 110, 32))
         self.exportButton.setObjectName(_fromUtf8("exportButton"))
         self.saveSettingsButton = QtGui.QPushButton(Dialog)
-        self.saveSettingsButton.setGeometry(QtCore.QRect(230, 540, 141, 32))
+        self.saveSettingsButton.setGeometry(QtCore.QRect(230, 590, 141, 32))
         self.saveSettingsButton.setObjectName(_fromUtf8("saveSettingsButton"))
         self.groupBox_4 = QtGui.QGroupBox(Dialog)
-        self.groupBox_4.setGeometry(QtCore.QRect(20, 430, 451, 101))
+        self.groupBox_4.setGeometry(QtCore.QRect(20, 480, 451, 101))
         self.groupBox_4.setObjectName(_fromUtf8("groupBox_4"))
         self.message = QtGui.QTextBrowser(self.groupBox_4)
         self.message.setGeometry(QtCore.QRect(10, 30, 431, 61))
