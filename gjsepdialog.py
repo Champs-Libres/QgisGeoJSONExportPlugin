@@ -240,7 +240,7 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
                 if(new_send_data_percent > d['send_data_percent']):
                     self.rm_last_char_message(5)
                     display_message(
-                        ' ' + new_send_data_percent.zfill(2) + '%')
+                        ' ' + str(new_send_data_percent).zfill(2) + '%')
                     d['send_data_percent'] = new_send_data_percent
             return ret
 
