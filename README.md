@@ -36,7 +36,7 @@ Not available for the moment.
 
 ### Export dialog
 
-Click on the "GeoJSON Export Plugin" and a dialog will appear. The options are the following :
+Click on the "GeoJSON Export Plugin" tool bar icon and a dialog will appear. The options are the following :
 
 #### Protocol
 
