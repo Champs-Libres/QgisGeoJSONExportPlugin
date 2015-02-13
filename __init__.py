@@ -21,6 +21,7 @@
     with QGISGeoJSONExportPlugin.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+
 def classFactory(iface):
     from gjsep import GeoJSONExportPlugin
     return GeoJSONExportPlugin(iface)
