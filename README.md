@@ -30,6 +30,12 @@ Create the following symbolic link : `~.qgis2/python/plugins/GeoJSONPlugin -> /p
 
 ### Via the QGIS interface
 
+* Go to the `Plugins` menu,
+* then `Manage and Install Plugins...`,
+* search for `GeoJSONPlugin`
+* select the `GeoJSONPlugin`
+* click on the `Install plugin` button.
+
 Not available for the moment.
 
 ## How to use it
