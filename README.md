@@ -1,6 +1,6 @@
 # GeoJSON Export Plugin
 
-This QGIS plugin helps users to convert vectorial layer into a GeoJSON file and send it to a remote server via ftp, sftp or ftps.
+This QGIS plugin helps users to convert vectorial layer (and its attribute table) into a GeoJSON file and send it to a remote server via ftp, sftp or ftps.
 
 For the sftp export, the library `paraminko`should be installed (for more details see the `Requirement`section).
 
@@ -18,7 +18,7 @@ pip install paraminko
 
 ## Features
 
-This plugin convert vectorial layer into a GeoJSON file and send it to a remote server via ftp, sftp or ftps
+This plugin convert vectorial layer (and its attribute table) into a GeoJSON file and send it to a remote server via ftp, sftp or ftps
 
 ## Installation
 
