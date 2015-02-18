@@ -214,7 +214,14 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         Keyword arguments:
         proto -- the protocol (can be protocol.FTP or protocol.FTPS)
         """
-        import ftplib
+        import sys
+
+        if sys.version_info < (2, 7) and proto == protocol.FTPS:
+            # FTPS not is not provided for python 2.6
+            import ftplib_26 as ftplib
+        else:
+            # Otherwise use the normal lib ftplib
+            import ftplib
 
         if proto == protocol.FTPS:
             s = ftplib.FTP_TLS()
