@@ -20,9 +20,8 @@
     You should have received a copy of the GNU General Public License along
     with QGISGeoJSONExportPlugin.  If not, see <http://www.gnu.org/licenses/>.
 """
-from PyQt4.QtCore import pyqtSlot
-from PyQt4.QtGui import QDialog, QLabel, QCheckBox, QListWidgetItem, qApp,\
-    QTextCursor
+
+from PyQt4.QtGui import QDialog, QListWidgetItem, qApp, QTextCursor
 
 from ui_gjsep import Ui_Dialog
 import protocol

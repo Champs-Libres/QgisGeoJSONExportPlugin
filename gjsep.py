@@ -21,17 +21,9 @@
     with QGISGeoJSONExportPlugin.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-
-# initialize Qt resources from file resources.py
-import resources
-import protocol
-import shelve
-import os
-import qgis.core
+from PyQt4.QtGui import QIcon, QAction
 from gjsepdialog import GeoJSONExportPluginDialog
-
+import qgis.core
 
 class GeoJSONExportPlugin:
     """QGIS Plugin that export geojson into a remote place"""
