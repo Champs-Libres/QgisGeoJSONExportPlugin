@@ -25,7 +25,6 @@ from PyQt4.QtGui import QDialog, QLabel, QCheckBox, QListWidgetItem, qApp,\
     QTextCursor
 
 from ui_gjsep import Ui_Dialog
-from processing.ui.ui_DlgConfig import Ui_DlgConfig
 import protocol
 import shelve
 import os
