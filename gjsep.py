@@ -27,6 +27,7 @@ from gjsepdialog import GeoJSONExportPluginDialog
 import qgis.core
 import resources
 
+
 class GeoJSONExportPlugin:
     """QGIS Plugin that export geojson into a remote place"""
 
