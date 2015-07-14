@@ -1,0 +1,6 @@
+# Conversion ui -> py :
+- pyuic4 UI/export.ui -o ui_gjsep.py
+
+# Interaction dans fenêtre (afficher / cacher des lignes ):
+View > Signal Slot Editor   (  http://stackoverflow.com/questions/2726392/how-to-connect-menu-click-with-action-in-qt-creator )
+

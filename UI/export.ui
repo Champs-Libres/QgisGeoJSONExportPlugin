@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QGroupBox" name="groupBox">
+      <widget class="QGroupBox" name="protocolBox">
        <property name="title">
         <string>Protocol :</string>
        </property>
@@ -54,20 +54,23 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox_2">
+      <widget class="QGroupBox" name="parametersBox">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="title">
         <string>Parameters :</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
-         <widget class="QLabel" name="serverUrlLabel">
+         <widget class="QLabel" name="urlLabel">
           <property name="text">
-           <string>Server Url :</string>
+           <string>Server/Script Url :</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="serverUrlLineEdit"/>
+         <widget class="QLineEdit" name="urlLineEdit"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="portLabel">
@@ -113,7 +116,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox_3">
+      <widget class="QGroupBox" name="layersBox">
        <property name="title">
         <string>Vectorial layers to export :</string>
        </property>
@@ -129,7 +132,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox_4">
+      <widget class="QGroupBox" name="messageBox">
        <property name="title">
         <string>Message :</string>
        </property>
@@ -181,11 +184,6 @@
     </layout>
    </item>
   </layout>
-  <action name="actionFtpChoice">
-   <property name="text">
-    <string>ftpChoice</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections>

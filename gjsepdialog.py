@@ -77,9 +77,13 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
                         self.fTPRadioButton.setChecked(True)
                     elif init_data['protocol'] == protocol.FTPS:
                         self.fTPSRadioButton.setChecked(True)
+                    elif init_data['protocol'] == protocol.POST:
+                        self.postRadioButton.setChecked(True)
+                        self.portLabel.hide()
+                        self.portLineEdit.hide()
                 if 'username' in init_data:
                     self.usernameLineEdit.setText(init_data['username'])
-                    self.serverUrlLineEdit.setText(init_data['server_url'])
+                    self.urlLineEdit.setText(init_data['server_url'])
                     self.pathLineEdit.setText(init_data['path'])
                     self.portLineEdit.setText(init_data['port'])
                     for layer in self.vector_layers:
@@ -92,9 +96,10 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         """Store the parameters"""
         data_to_store = {}
         proto = self.get_protocol()
-        if proto == protocol.SFTP or proto == protocol.FTPS:
+        if proto == protocol.SFTP or proto == protocol.FTPS or \
+           proto == protocol.FTPS or proto == protocol.POST:
             data_to_store['username'] = self.get_username()
-            data_to_store['server_url'] = self.get_server_url()
+            data_to_store['server_url'] = self.get_url()
             data_to_store['path'] = self.get_path()
             data_to_store['port'] = self.get_port()
         data_to_store['protocol'] = proto
@@ -168,12 +173,12 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
             port = self.get_port()
             if port:
                 s.connect(
-                    self.get_server_url(), port=int(port),
+                    self.get_url(), port=int(port),
                     username=self.get_username(),
                     password=self.get_password(), timeout=4)
             else:
                 s.connect(
-                    self.get_server_url(), username=self.get_username(),
+                    self.get_url(), username=self.get_username(),
                     password=self.get_password(), timeout=4)
 
             sftp = s.open_sftp()
@@ -229,9 +234,9 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
 
         port = self.get_port()
         if port:
-            s.connect(host=self.get_server_url(), port=int(port))
+            s.connect(host=self.get_url(), port=int(port))
         else:
-            s.connect(host=self.get_server_url())
+            s.connect(host=self.get_url())
         s.login(user=self.get_username(), passwd=self.get_password())
         if proto == protocol.FTPS:
             s.prot_p()
@@ -271,26 +276,24 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         import urllib2
         import json
         from poster.encode import multipart_encode
-        from poster.streaminghttp import register_openers
+        from poster.streaminghttp import get_handlers
 
         username = self.get_username()
         password = self.get_password()
-        url = self.get_server_url()
+        url = self.get_url()
         path = self.get_path()
-        print username
-        print password
-        print'-'
+        handlers = get_handlers()
 
         if(username and password):
             # Need identification
-            print "ident"
             password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
-            password_mgr.add_password(None, 'http://localhost/~marcu/WombatGIS/admin-secure', username, password)
-            handler = urllib2.HTTPBasicAuthHandler(password_mgr)
-            opener = urllib2.build_opener(handler)
-            urllib2.install_opener(opener)
+            password_mgr.add_password(
+                None, 'http://localhost/~marcu/WombatGIS/admin-secure',
+                username, password)
+            handlers.append(urllib2.HTTPBasicAuthHandler(password_mgr))
 
-        register_openers()
+        opener = urllib2.build_opener(*handlers)
+        urllib2.install_opener(opener)
 
         for file_name in os.listdir(self.tmp_folder_path):
             self.display_message('Sending ' + file_name + ' :')
@@ -305,17 +308,17 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
             request = urllib2.Request(url, data=data, headers=headers)
             f = urllib2.urlopen(request)
             data = f.read()
-            print data
-            print json.loads(data)
-
-        # tester http://localhost/~marcu/WombatGIS/admin/upload.php
-
+            json_data = json.loads(data)
+            f.close()
+            if json_data['code'] == 1:
+                self.display_success_message('uploaded')
+            else:
+                raise Exception(json_data['message'])
 
     def export(self):
         """Send the data to a remote place"""
         self.clear_message()
         proto = self.get_protocol()
-
         self.json_file_generation()
 
         try:
@@ -432,9 +435,9 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
         else:
             return protocol.POST
 
-    def get_server_url(self):
+    def get_url(self):
         """Get the server url entered by the user in the dialog form."""
-        return self.serverUrlLineEdit.text()
+        return self.urlLineEdit.text()
 
     def get_username(self):
         """Get the username entered by the user in the dialog form."""
