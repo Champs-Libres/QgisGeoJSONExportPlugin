@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'UI/export.ui'
 #
-# Created: Mon Feb 16 10:11:03 2015
+# Created: Mon Jul 13 17:36:28 2015
 #      by: PyQt4 UI code generator 4.11.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(467, 617)
+        Dialog.resize(541, 659)
         self.gridLayout = QtGui.QGridLayout(Dialog)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.verticalLayout = QtGui.QVBoxLayout()
@@ -44,6 +44,9 @@ class Ui_Dialog(object):
         self.fTPSRadioButton = QtGui.QRadioButton(self.groupBox)
         self.fTPSRadioButton.setObjectName(_fromUtf8("fTPSRadioButton"))
         self.gridLayout_2.addWidget(self.fTPSRadioButton, 2, 0, 1, 1)
+        self.radioButton = QtGui.QRadioButton(self.groupBox)
+        self.radioButton.setObjectName(_fromUtf8("radioButton"))
+        self.gridLayout_2.addWidget(self.radioButton, 3, 0, 1, 1)
         self.verticalLayout.addWidget(self.groupBox)
         self.groupBox_2 = QtGui.QGroupBox(Dialog)
         self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
@@ -112,8 +115,12 @@ class Ui_Dialog(object):
         self.exportButton.setObjectName(_fromUtf8("exportButton"))
         self.horizontalLayout.addWidget(self.exportButton)
         self.gridLayout.addLayout(self.horizontalLayout, 1, 0, 1, 1)
+        self.actionFtpChoice = QtGui.QAction(Dialog)
+        self.actionFtpChoice.setObjectName(_fromUtf8("actionFtpChoice"))
 
         self.retranslateUi(Dialog)
+        QtCore.QObject.connect(self.fTPRadioButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.passwordLineEdit.hide)
+        QtCore.QObject.connect(self.fTPRadioButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.passwordLabel.hide)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -122,6 +129,7 @@ class Ui_Dialog(object):
         self.fTPRadioButton.setText(_translate("Dialog", "FTP", None))
         self.sFTPRadioButton.setText(_translate("Dialog", "SSH FTP", None))
         self.fTPSRadioButton.setText(_translate("Dialog", "FTP SSL/TLS", None))
+        self.radioButton.setText(_translate("Dialog", "POST", None))
         self.groupBox_2.setTitle(_translate("Dialog", "Parameters :", None))
         self.serverUrlLabel.setText(_translate("Dialog", "Server Url :", None))
         self.portLabel.setText(_translate("Dialog", "Port :", None))
@@ -133,4 +141,5 @@ class Ui_Dialog(object):
         self.cancelButton.setText(_translate("Dialog", "Cancel", None))
         self.saveSettingsButton.setText(_translate("Dialog", "Save parameters", None))
         self.exportButton.setText(_translate("Dialog", "Export", None))
+        self.actionFtpChoice.setText(_translate("Dialog", "ftpChoice", None))
 

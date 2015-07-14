@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>467</width>
-    <height>617</height>
+    <width>541</width>
+    <height>659</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,13 +43,14 @@
           </property>
          </widget>
         </item>
+        <item row="3" column="0">
+         <widget class="QRadioButton" name="postRadioButton">
+          <property name="text">
+           <string>POST</string>
+          </property>
+         </widget>
+        </item>
        </layout>
-       <zorder>fTPRadioButton</zorder>
-       <zorder>sFTPRadioButton</zorder>
-       <zorder>fTPSRadioButton</zorder>
-       <zorder>groupBox_2</zorder>
-       <zorder>groupBox_2</zorder>
-       <zorder>groupBox_2</zorder>
       </widget>
      </item>
      <item>
@@ -180,11 +181,141 @@
     </layout>
    </item>
   </layout>
-  <zorder>formLayoutWidget</zorder>
-  <zorder>horizontalLayoutWidget</zorder>
-  <zorder>formLayoutWidget</zorder>
-  <zorder>verticalLayoutWidget</zorder>
+  <action name="actionFtpChoice">
+   <property name="text">
+    <string>ftpChoice</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>postRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>portLabel</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>269</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>61</x>
+     <y>194</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>postRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>portLineEdit</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>269</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>194</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fTPRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>portLabel</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>269</x>
+     <y>49</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>61</x>
+     <y>194</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fTPRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>portLineEdit</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>269</x>
+     <y>49</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>194</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fTPSRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>portLabel</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>269</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>61</x>
+     <y>194</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fTPSRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>portLineEdit</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>269</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>194</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sFTPRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>portLabel</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>269</x>
+     <y>66</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>61</x>
+     <y>194</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sFTPRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>portLineEdit</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>269</x>
+     <y>66</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>194</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

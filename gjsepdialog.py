@@ -77,6 +77,7 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
                         self.fTPRadioButton.setChecked(True)
                     elif init_data['protocol'] == protocol.FTPS:
                         self.fTPSRadioButton.setChecked(True)
+                if 'username' in init_data:
                     self.usernameLineEdit.setText(init_data['username'])
                     self.serverUrlLineEdit.setText(init_data['server_url'])
                     self.pathLineEdit.setText(init_data['path'])
@@ -266,10 +267,55 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
             f.close()
         s.close()
 
+    def post_upload(self):
+        import urllib2
+        import json
+        from poster.encode import multipart_encode
+        from poster.streaminghttp import register_openers
+
+        username = self.get_username()
+        password = self.get_password()
+        url = self.get_server_url()
+        path = self.get_path()
+        print username
+        print password
+        print'-'
+
+        if(username and password):
+            # Need identification
+            print "ident"
+            password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
+            password_mgr.add_password(None, 'http://localhost/~marcu/WombatGIS/admin-secure', username, password)
+            handler = urllib2.HTTPBasicAuthHandler(password_mgr)
+            opener = urllib2.build_opener(handler)
+            urllib2.install_opener(opener)
+
+        register_openers()
+
+        for file_name in os.listdir(self.tmp_folder_path):
+            self.display_message('Sending ' + file_name + ' :')
+            absolute_file_name = os.path.join(
+                self.tmp_folder_path, file_name)
+            f = open(absolute_file_name, 'r')
+            fields = [('uploaded_file', f)]
+            if(path):
+                fields.append(('destination_path', path))
+            data, headers =\
+                multipart_encode(fields)
+            request = urllib2.Request(url, data=data, headers=headers)
+            f = urllib2.urlopen(request)
+            data = f.read()
+            print data
+            print json.loads(data)
+
+        # tester http://localhost/~marcu/WombatGIS/admin/upload.php
+
+
     def export(self):
         """Send the data to a remote place"""
         self.clear_message()
         proto = self.get_protocol()
+
         self.json_file_generation()
 
         try:
@@ -277,6 +323,8 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
                 self.sftp_upload()
             elif proto == protocol.FTPS or proto == protocol.FTP:
                 self.ftp_ftps_upload(proto)
+            elif proto == protocol.POST:
+                self.post_upload()
             else:
                 self.display_error_message('Unknown protocol')
             if self.clear_tmp_folder():
@@ -379,8 +427,10 @@ class GeoJSONExportPluginDialog(QDialog, Ui_Dialog):
             return protocol.FTPS
         elif self.fTPRadioButton.isChecked():
             return protocol.FTP
-        else:
+        elif self.sFTPRadioButton.isChecked():
             return protocol.SFTP
+        else:
+            return protocol.POST
 
     def get_server_url(self):
         """Get the server url entered by the user in the dialog form."""
