@@ -1,10 +1,10 @@
 [general]
 name=GeoJSONPlugin
-qgisMinimumVersion=2.0
+qgisMinimumVersion=3.0
 description= QGISGeoJSONExportPluginQGIS helps you to convert vectorial layer 
     (and its attribute table) into a GeoJSON file and sends it to a remote
     server via ftp, sftp or ftps.
-version=0.2.0
+version=0.2.2
 author=Champs-Libres Cooperative
 email=info@champs-libres.coop
 tags=json, geojson, ftp, sftp, ftps

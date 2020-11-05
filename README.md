@@ -26,7 +26,7 @@ This plugin convert vectorial layer (and its attribute table) into a GeoJSON fil
 
 Clone the git repository.
 
-Create the following symbolic link : `~.qgis2/python/plugins/GeoJSONPlugin -> /plugin/folder/`
+Create the following symbolic link : `~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/GeoJSONPlugin -> /plugin/folder/`
 
 ### Via the QGIS interface
 
