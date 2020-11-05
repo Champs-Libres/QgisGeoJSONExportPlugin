@@ -130,3 +130,19 @@ For example if the attibutes table contains three columns `col1`, `col2`, `col3`
     You should have received a copy of the GNU General Public License along
     with QGISGeoJSONExportPlugin.  If not, see <http://www.gnu.org/licenses/>.
 ```
+
+## Tests
+
+Docker test images to test connexions. Start containers:
+```
+$ cd test
+$ docker-compose up
+```
+and connect with 
+
+| protocol | login | password | address | port | 
+|----------|-------|----------|---------|------|
+| ftps | username | password | localhost | 4567 |
+| sftp | foo | pass | localhost | 4522 |
+
+Be sure all file and dirs in `test/mnt` are recursively chown with `<you_user>` and `<your_group>` 
