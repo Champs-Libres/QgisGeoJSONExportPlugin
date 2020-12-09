@@ -1,0 +1,25 @@
+version: "3.6"
+services:
+   
+   # FTP, FTPS
+   # https://hub.docker.com/r/mikatux/ftps-server
+   ftps_server:
+      image: mikatux/ftps-server
+      volumes:
+         - ./mnt/ftps_server:/home/username
+      environment:
+         USER: username
+         PASSWORD: password
+      ports:
+         - "4567:21"
+         - "3000-3010:3000-3010"
+
+   # SFTP (SSH)
+   # https://hub.docker.com/r/atmoz/sftp      
+   sftp_server:
+      image: atmoz/sftp:debian
+      volumes:
+         - ./mnt/sftp_server:/home/foo/upload
+      ports:
+         - "4522:22"
+      command: foo:pass:1000

@@ -26,7 +26,7 @@ This plugin convert vectorial layer (and its attribute table) into a GeoJSON fil
 
 Clone the git repository.
 
-Create the following symbolic link : `~.qgis2/python/plugins/GeoJSONPlugin -> /plugin/folder/`
+Create the following symbolic link : `~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/GeoJSONPlugin -> /plugin/folder/`
 
 ### Via the QGIS interface
 
@@ -130,3 +130,19 @@ For example if the attibutes table contains three columns `col1`, `col2`, `col3`
     You should have received a copy of the GNU General Public License along
     with QGISGeoJSONExportPlugin.  If not, see <http://www.gnu.org/licenses/>.
 ```
+
+## Tests
+
+Docker test images to test connexions. Start containers:
+```
+$ cd test
+$ docker-compose up
+```
+and connect with 
+
+| protocol | login | password | address | port | 
+|----------|-------|----------|---------|------|
+| ftps | username | password | localhost | 4567 |
+| sftp | foo | pass | localhost | 4522 |
+
+Be sure all file and dirs in `test/mnt` are recursively chown with `<you_user>` and `<your_group>` 

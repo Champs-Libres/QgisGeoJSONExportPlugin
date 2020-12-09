@@ -6,3 +6,5 @@ __pycache__/
 *.so
 
 .DS_Store
+
+test/mnt
